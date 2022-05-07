@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原型模式</title>
+</head>
+<body>
+    <script>
+        /*
+        * 原型模式
+        *   当对象无法响应某个请求，会把这个请求委托给它的构造器的原型。
+        *   JavaScript对象最初是由Object.prototype对象克隆而来的，但是构造器的原型并不限于Object.prototype上，而是可以动态的指向其他的对象。
+        * */
+
+        // 常用的原型继承
+        let A = function () {};
+        A.prototype = {name: '原型'};
+        let B = function () {};
+        B.prototype = new A();
+        let b = new B();
+        console.log(b.name); // 原型
+
+        // Es6 class继承
+        class Animal {
+            constructor(name) {
+                this.name = name;
+            }
+            getName() {
+                return this.name;
+            }
+        }
+        class Dog extends Animal {
+            constructor(name) {
+                super(name);
+            }
+            speak() {
+                return '汪汪汪~'
+            }
+        }
+        class Cat extends Animal {
+            constructor(name) {
+                super(name);
+            }
+            speak() {
+                return '喵喵喵~'
+            }
+        }
+        let dog = new Dog('小叮当');
+        let cat = new Cat('Tom');
+        console.log(`${dog.getName()} say ${dog.speak()}`) // 小叮当 say 汪汪汪~
+        console.log(`${cat.getName()} say ${cat.speak()}`) // Tom say 喵喵喵~
+    </script>
+</body>
+</html>
