@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>多态</title>
+</head>
+<body>
+  <script type="text/javascript">
+    /*
+    * 静态语言 Java、go...
+    * 定义：编译是便已确定好变量类型的语言。
+      优点：
+      1、编译时就可以发现类型不匹配的错误，提前避免程序运行期间可能发生的一些错误；
+      2、程序中明确定义好数据类型，编译器可以针对这些信息进行优化工作，提高程序的执行速度；
+
+      缺点：
+      1、强迫程序员依照契约编写程序；为每个变量定义类型；
+      2、代码量增多，
+    *
+    * 动态语言：JavaScript
+    * 定义：程序运行到某个变量被赋予某个值之后，才会具有某种类型。
+      优点：
+      1、编写的代码数量更少，看起来更简洁，可以有更多的精力放在业务逻辑上；
+      2、代码量少之后一定程度可以提高程序阅读效率；
+
+      缺点：
+      1、无法保证变量的类型，可能在运行期间发生跟变量类型相关的错误；
+    * 
+    * 
+    * 多态定义：
+    *   同一操作作用于不同的对象上产生不同的解释和执行结果；把做什么和谁去做分离开来，消除类型之间的耦合关系。
+    * 
+    * JavaScript的多态是与生俱来的，JavaScript是一门动态类型的语言，编译过程中不存在类型检查的过程，不检查创建的对象类型，也不检查传递的参数类型；
+    * 
+    * 多态在面向对象中的作用？
+    *   不必询问对象是什么类型，根据得到的答案调用对象的某个行为。（只管调用就行，其他机制无需关心）
+    * 多态的根本机制：
+    *   将过程化的条件语句转为对象的多态性，消除这些条件分支语句。（对象做什么是提前约定好的，将行为分布再各个对象中，每个对象负责自己的行为）
+    */ 
+
+    // 代码示例：
+    const quickCar = function (carType) {
+        carType.travel()
+    }
+    var Bicycle = function () {}
+    Bicycle.prototype.travel = function () {
+        console.log('我是自行车，开得很慢~')
+    }
+    var SportsCar = function () {}
+    SportsCar.prototype.travel = function () {
+        console.log('我是超跑，跑得贼快，颜值还高~')
+    }
+    quickCar(new Bicycle()); // 我是自行车，开得很慢~
+    quickCar(new SportsCar()); // 我是超跑，跑得贼快，颜值还高~
+  </script>
+</body>
+</html>

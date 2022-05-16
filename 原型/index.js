@@ -1,6 +1,17 @@
 /*
+  JavaScript中不是所有类型都是对象，但是大部分数据都是对象，JavaScript也存在一个根对象----->Object.prototype（空对象）；
+  我们在JavaScript中遇到的每个对象都是从Object.prototype中克隆而来的，Object.prototype是他们的原型。
   JavaScript对象都是从某个对象上克隆而来的；原型的面向对象系统参考了Io语言：Io语言中没有类的概念，每个对象都是基于另一个对象的克隆。
   既然每个对象都是基于另一个对象的克隆，那么就需要一个根对象，而其他对象就都是来源于这个根对象，在Io中根对象为Object。
+
+  Io语言克隆对象： Car := clone Objetct
+  JavaScript中我们不关心克隆的细节，这是引擎内部负责实现的，我们需要做的是显示的调用，如：
+  var obj1 = new Object()或者var obj2 = {};此时JavaScript引擎内部会从Object.prototype上面克隆一个对象出来。
+
+  当我们使用new运算符来调用函数时，此时的函数就相当于一个构造器，用new 运算符来创建对象的过程，实际上也是克隆了Object.prototype对象，再进行一些额外的操作的过程。
+  JavaScript是通过Object.prototype来得到新的对象，但是并不是每一次都会真正克隆一个新得对象。
+  对象会记住它的原型，要实现Io语言和JavaScript语言中的原型链查找机制，至少每个对象都应该记住他自己的原型。
+  JavaScript中----->对象的原型其实应该说成是------->对象的构造器有原型。
 
   什么是原型？ prototype?
     每个JavaScript对象(null除外)在创建时会与之关联另一个对象，这个对象就是原型，每个对象都会从原型上继承属性；
@@ -21,7 +32,10 @@
 
     // __proto__
     // 每个JavaScript对象(除null)以外都具有一个属性，叫__proto__，这个属性指向该对象的原型；
+    // __proto__属性默认指向它的构造器的原型对象({constructor}.prototype)，__proto__是对象和对象构造器的原型联系起来的纽带。
+    var obj = new Object();
     console.log(Parent.prototype === child1.__proto__) // true 构造函数的显示原型 === 实例对象的隐式原型
+    console.log(obj.__proto__ === Object.prototype) // true
 
     // constructor 构造器,构造函数可以生成多个实例；每个原型都有一个constructor属性指向关联的构造函数，参考如下
     console.log(Parent === Parent.prototype.constructor)  // true
