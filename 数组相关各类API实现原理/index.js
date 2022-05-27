@@ -216,3 +216,57 @@ let allPrice = arr.myReduce((arr, item) => {
   return arr + item.price;
 }, 0)
 console.log('allPrice', allPrice) // allPrice 65
+
+
+/*
+* flat函数实现,Es5实现，Es6实现，reduce实现
+*/
+
+// Es5递归实现扁平化
+const flatEs5Fun = (arr) => { 
+    if (!arr.length) {
+        throw new TypeError('arr cannot be empty')
+    }
+    let newArr = [];
+    for (let i = 0; i < arr.length; i++) {
+        // 判断取出的值还是不是数组类型
+        if (Array.isArray(arr[i])) {
+            // 递归调用，扁平化
+            newArr = newArr.concat(flatEs5Fun(arr[i]))
+        } else {
+            newArr.push(arr[i])
+        }
+    }
+    return newArr
+}
+
+// Es6实现扁平化
+const flatEs6Fun = (arr) => {
+    if (!arr.length) {
+        throw new TypeError('arr cannot be empty')
+    }
+    while (arr.some(item => Array.isArray(item))) {
+        arr = [].concat(...arr)
+    }
+    return arr
+}
+
+// reduce实现扁平化
+const flatReduceFun = (arr, depth = 1) => {
+    if (!arr.length) {
+        throw new TypeError('arr cannot be empty')
+    }
+    return depth > 0 ? arr.reduce((acc, cur) => {
+        if (Array.isArray(cur)) {
+            return [...acc, ...flatReduceFun(cur, depth - 1)]
+        }
+        return [...acc, cur]
+    }, []) : arr
+}
+
+
+// test flat
+let oldArr = [0,1,2,3,[4,5],6,7,[9,[10],11],12];
+console.log('flatEs5Fun', flatEs5Fun(oldArr)) // flatEs5Fun (12) [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12] 
+console.log('flatEs6Fun', flatEs6Fun(oldArr)) // flatEs6Fun (12) [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12]
+console.log('flatReduceFun', flatReduceFun(oldArr, 2))  // flatReduceFun (12) [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12]
