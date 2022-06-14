@@ -161,10 +161,10 @@ let validationFunc = function () {
         strategy: 'isNonEmpty',
         errorMsg: '用户名不能为空~'
     }, {
-                strategy: 'minLength:3',
-                errorMsg: '用户名最小长度不能少于3位~'
-            }
-        ]);
+        strategy: 'minLength:3',
+        errorMsg: '用户名最小长度不能少于3位~'
+        }
+    ]);
     validator.add(registerForm.password, [{
         strategy: 'isNonEmpty',
         errorMsg: '密码不能为空~'
