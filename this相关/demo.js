@@ -1,7 +1,7 @@
 /*
-* this总是指向一个对象，具体指向哪个对象是基于函数的执行环境动态绑定的；
-* this 指向大致分为以下4种，
-*/ 
+ * this总是指向一个对象，具体指向哪个对象是基于函数的执行环境动态绑定的；
+ * this 指向大致分为以下4种，
+ */
 
 // 1、作为对象的方法调用,此时this指向该对象；
 var obj = {
@@ -20,29 +20,29 @@ obj.getName(); // 输出：true, this Object, obj Object, ai
 
 // 2、作为普通函数调用，总是指向他的全局对象
 window.AAA = '猪儿虫';
-var getName = function () { 
+var getName = function () {
   console.log(this)
   console.log(this.AAA)
- }
- console.log(getName()) // windoW{xxxxxxxx}, 猪儿虫, undefined
+}
+console.log(getName()) // windoW{xxxxxxxx}, 猪儿虫, undefined
 
 
 // 3、构造器调用时，通常情况this会指向返回的对象；
 // 显示返回一个对象，
-var fluitClass = function () { 
-    this.name = '苹果';
-    console.log(this)
-    return {
-      name: '菠萝'
-    }
+var fluitClass = function () {
+  this.name = '苹果';
+  console.log(this)
+  return {
+    name: '菠萝'
+  }
 }
 var fluitObj = new fluitClass();
 console.log(fluitObj.name) // 菠萝，正常我们想输出的是苹果，说明this指向变了；
 
 // 不显示返回任何一个数据，或者返回一个非对象类型的数据,此时this指向不会发生变化；
-var vegetablesClass = function () { 
-    this.name = '西红柿';
-    return '土豆';
+var vegetablesClass = function () {
+  this.name = '西红柿';
+  return '土豆';
 }
 var vegetablesObj = new vegetablesClass();
 console.log(vegetablesObj.name) // 西红柿
@@ -51,8 +51,8 @@ console.log(vegetablesObj.name) // 西红柿
 // 4、call和apply调用时，动态的改变传入函数的this；
 var foodObj = {
   name: '红油小面',
-  getName: function () { 
-      return this.name
+  getName: function () {
+    return this.name
   }
 }
 var drinkObj = {
@@ -66,21 +66,23 @@ console.log(foodObj.getName.call(drinkObj)) // 大乌苏，此时this指向了dr
 // 1、指向改变
 var ageObj = {
   age: 18,
-  getAge: function () { console.log(this.age) }
+  getAge: function () {
+    console.log(this.age)
+  }
 }
 console.log('ageObj', ageObj.getAge()) // ageObj， 18
 var getAge2 = ageObj.getAge;
 console.log('getAge2', getAge2()) // getAge2， undefined（普通函数调用this指向全局window对象）
 
 // 修订普通函数调用时this指向window的问题
-document.getElementById = (function (func) { 
-    return function () { 
-        return func.apply(document, arguments)
-     }
- })(document.getElementById);
- var getId = document.getElementById;
- var demoId = getId('demoId');
- console.log('demoId', demoId) // demoId <div id=​"demoId">​</div>​
+document.getElementById = (function (func) {
+  return function () {
+    return func.apply(document, arguments)
+  }
+})(document.getElementById);
+var getId = document.getElementById;
+var demoId = getId('demoId');
+console.log('demoId', demoId) // demoId <div id=​"demoId">​</div>​
 
 
 
@@ -98,24 +100,24 @@ document.getElementById = (function (func) {
 
   call传入的参数数量不固定，第一个参数指定this的指向，第二个参数开始每个参数依次传入函数；
   call是包装在apply的语法糖，如果我们明确知道有几个参数，想明确的表达形参和实参之间的关系，可以用call来传递参数
-*/ 
+*/
 
-var funCa = function (a,b,c,d) { 
-  console.log([a,b,c,d]);
+var funCa = function (a, b, c, d) {
+  console.log([a, b, c, d]);
 }
-funCa.call(null, 1,2,3,4)
+funCa.call(null, 1, 2, 3, 4)
 
-var funcAp = function (a,b,c) { 
+var funcAp = function (a, b, c) {
   console.log(this === window)
 }
-funcAp.apply(null, [1,2,3])
+funcAp.apply(null, [1, 2, 3])
 
 // call源码实现 func.call(this, a...)
 Function.prototype.myCall = function (context) {
   // 转为对象
   context = context ? Object(context) : window;
   // 给对象绑定this,全局指向window，函数中时指向调用它的方法
-  context.fn  = this;
+  context.fn = this;
   // 取出所有实参，
   let args = [...arguments].slice(1);
   // 调用函数
@@ -140,9 +142,9 @@ Function.prototype.myApply = function (context, arr) {
   // 定义函数
   let result;
   if (!arr) {
-      result = context.fn();
+    result = context.fn();
   } else {
-      result = context.fn(...arr);
+    result = context.fn(...arr);
   }
   // 删除函数
   delete result;
@@ -151,7 +153,7 @@ Function.prototype.myApply = function (context, arr) {
 }
 
 // test myApply 
-let ageArr = [19,18,14,88,24];
+let ageArr = [19, 18, 14, 88, 24];
 let funMin = Math.min(ageArr);
 console.log('funMin', funMin) // funMin NaN, Math.min不接受数组作为参数，
 // 可以写成 Math.min(...ageArr) 或者 Math.min.apply(null, ageArr)二者均能求出最小值
@@ -189,9 +191,9 @@ Function.prototype.myBind = function (context) {
 // test myBind
 function car(col, price) {
   return {
-      name: this.name,
-      col: col,
-      price: price
+    name: this.name,
+    col: col,
+    price: price
   }
 };
 let name = '奔驰迈巴赫'
